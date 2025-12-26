@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.screens.OnBoarding4">
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/bobo_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/onboardingbackgr1"
+        android:backgroundTint="@color/softgreen"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+
+      <com.airbnb.lottie.LottieAnimationView
+          android:id="@+id/hamburgerlottie"
+          android:layout_width="400dp"
+          android:layout_height="400dp"
+          android:scrollbarSize="@dimen/cardview_default_elevation"
+          app:lottie_fileName="hamburger.json"
+          app:lottie_autoPlay="true"
+          app:lottie_loop="true"
+          />
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Join to get the delicious quizines!"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/googlebutton"
+        android:layout_width="0dp"
+        style="@style/Widget.Material3.Button.IconButton.Outlined"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:icon="@drawable/google_icon"
+        app:iconTint="@null"
+        app:iconSize="25dp"
+        android:text="Sign in with Google"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="16sp"
+        app:strokeColor="@color/ngray"
+        android:textColor="@color/ngray"
+        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logbutton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sign in with Email"
+        app:icon="@drawable/email_icon"
+        app:iconSize="32dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_bold"
+        app:backgroundTint="@color/selectbutton"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/googlebutton"
+        app:layout_constraintStart_toStartOf="@+id/googlebutton"
+        app:layout_constraintTop_toBottomOf="@+id/googlebutton" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

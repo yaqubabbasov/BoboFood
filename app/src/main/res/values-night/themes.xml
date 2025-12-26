@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application dark theme -->
+    <style name="Base.Theme.BoboFood" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainerDark</item>
+        <item name="colorSecondary">@color/colorSecondaryDark</item>
+        <item name="colorSurface">@color/colorSurfaceDark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryDark</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundDark</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceDark</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+    </style>
+
+    <!-- CheckBox styling -->
+    <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <!-- Material3 built-in overlay istifadə olunur -->
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Material3</item>
+        <item name="buttonTint">@color/checkbox_color_dark</item>
+    </style>
+
+    <!-- SearchView üçün -->
+    <style name="CustomSearchView" parent="Widget.Material3.SearchView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="boxBackgroundColor">@color/backgroundDark</item>
+    </style>
+
+
+</resources>

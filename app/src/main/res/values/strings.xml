@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">BoboFood</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="web_client_id">282265271114-3og75vtgrmp89qdm7esi3fuqgb77m9kh.apps.googleusercontent.com</string>
+</resources>

@@ -1,0 +1,37 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BoboFood" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+    </style>
+
+
+    <style name="Theme.BoboFood" parent="Base.Theme.BoboFood" />
+    <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CheckBox</item>
+        <item name="buttonTint">@color/checkbox_color</item>
+    </style>
+    <style name="ThemeOverlay.App.CheckBox" parent="">
+        <item name="colorControlActivated">@color/selectbutton</item> <!-- checked rəngi -->
+        <item name="colorOnSurface">@color/red</item>       <!-- unchecked rəngi -->
+    </style>
+    <style name="MySearchViewTheme" parent="ThemeOverlay.Material3.Search">
+        <item name="colorSurface">@color/green</item>
+        <item name="colorOnSurface">@color/black</item>
+    </style>
+    <style name="CustomSearchView" parent="Widget.Material3.SearchView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="queryBackground">@color/white</item>
+        <item name="boxBackgroundColor">@color/backsoftgreen</item>
+    </style>
+
+</resources>

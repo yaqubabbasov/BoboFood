@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Basic Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="hintcolor">#91958E</color>
+    <color name="forgotcolor">#408308</color>
+    <color name="unselectbutton">#E8EBE6</color>
+    <color name="selectbutton">#54A312</color>
+    <color name="iconbackgr">#ECF1E8</color>
+    <color name="red">#E25839</color>
+    <color name="green">#06F02C</color>
+    <color name="softgreen">#F5F8F2</color>
+    <color name="buttontextcolor">#B6B8B6</color>
+    <color name="orange">#FFA500</color>
+    <color name="darkgreen">#6F9574</color>
+    <color name="gray">#ADACAC</color>
+    <color name="ngray">#595959</color>
+    <color name="backsoftgreen">#ECFFEF</color>
+    <color name="softgray">#E4E0E0</color>
+
+    <!-- Material3 Light Colors -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryContainer">#BB86FC</color>
+    <color name="colorSecondary">#03DAC6</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnBackground">#000000</color>
+    <color name="colorOnSurface">#000000</color>
+
+    <!-- Custom Light Colors -->
+    <color name="backgroundLight">#FFFFFF</color>
+    <color name="checkbox_color_light">#6200EE</color>
+
+    
+</resources>

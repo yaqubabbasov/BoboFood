@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "282265271114",
+    "project_id": "bobofood-f86e5",
+    "storage_bucket": "bobofood-f86e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282265271114:android:a8d5c1f277cafb0d94dfb3",
+        "android_client_info": {
+          "package_name": "com.yaqubabbasov.bobofood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282265271114-piie6l2tcnl4euquejcmo0enq7ji9de3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yaqubabbasov.bobofood",
+            "certificate_hash": "4ca5a0544a56051586dd11d7f950ae8493bdaeb3"
+          }
+        },
+        {
+          "client_id": "282265271114-3og75vtgrmp89qdm7esi3fuqgb77m9kh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtAklkBlxI1GSUt3tC8JVW63N-6M59q8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282265271114-3og75vtgrmp89qdm7esi3fuqgb77m9kh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
