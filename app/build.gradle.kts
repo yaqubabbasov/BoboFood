@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.navigation.ui.ktx)
     //ksp(libs.hilt.compiler)
 
     kapt("com.google.dagger:hilt-android-compiler:2.57")

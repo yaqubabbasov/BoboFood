@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.bottomnavigation,nav)
         nav.addOnDestinationChangedListener { _,destination, _ ->
             when(destination.id){
-                R.id.loginfragment,R.id.detailFragment,R.id.splashFragment->binding.bottomnavigation.visibility= View.GONE
+                R.id.loginfragment,R.id.detailFragment,R.id.splashFragment,R.id.signUpfragment->binding.bottomnavigation.visibility= View.GONE
                 R.id.homeFragment,R.id.cartFragment->binding.bottomnavigation.visibility= View.VISIBLE
             }
         }
