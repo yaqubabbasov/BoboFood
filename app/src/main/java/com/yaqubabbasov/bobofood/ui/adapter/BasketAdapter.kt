@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yaqubabbasov.bobofood.data.entity.Basket_List
 import com.yaqubabbasov.bobofood.databinding.BasketCardBinding
-import com.yaqubabbasov.bobofood.ui.viewmodel.CartViewmodel
+import com.yaqubabbasov.bobofood.ui.cart.CartViewmodel
 
 class BasketAdapter(val mcontext: Context, var foodlist: List<Basket_List>,val viewmodel: CartViewmodel): RecyclerView.Adapter<BasketAdapter.BasketViewHolder>(){
     inner class BasketViewHolder(var binding: BasketCardBinding): RecyclerView.ViewHolder(binding.root)
