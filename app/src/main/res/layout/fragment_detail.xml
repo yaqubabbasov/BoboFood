@@ -9,10 +9,10 @@
             type="com.yaqubabbasov.bobofood.data.entity.Yemekler" />
         <variable
             name="DtlFragment"
-            type="com.yaqubabbasov.bobofood.ui.fragment.DetailFragment" />
+            type="com.yaqubabbasov.bobofood.ui.detail.DetailFragment" />
         <variable
             name="Dtviewmodel"
-            type="com.yaqubabbasov.bobofood.ui.viewmodel.DetailViewModel" />
+            type="com.yaqubabbasov.bobofood.ui.detail.DetailViewModel" />
         <variable
             name="tcount"
             type="String" />
@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.DetailFragment">
+        tools:context=".ui.detail.DetailFragment">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"

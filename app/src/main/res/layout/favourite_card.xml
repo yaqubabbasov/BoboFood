@@ -71,6 +71,19 @@
                 app:layout_constraintStart_toStartOf="@+id/basket_name"
                 app:layout_constraintTop_toBottomOf="@+id/basket_name" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deletebutton"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/delete"
+                app:iconTint="@color/black"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/basketcost"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/basketcost" />
+
 
 
 

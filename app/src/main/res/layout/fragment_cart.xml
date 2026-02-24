@@ -6,7 +6,7 @@
     <data>
       <variable
           name="Cartfr"
-          type="com.yaqubabbasov.bobofood.ui.fragment.CartFragment" />
+          type="com.yaqubabbasov.bobofood.ui.cart.CartFragment" />
         <variable
             name="cartadapt"
             type="com.yaqubabbasov.bobofood.ui.adapter.BasketAdapter" />
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".ui.fragment.CartFragment">
+        tools:context=".ui.cart.CartFragment">
 
         <ImageView
             android:id="@+id/imageView2"

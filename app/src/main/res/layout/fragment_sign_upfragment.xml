@@ -9,25 +9,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.SignUpfragment">
+        tools:context=".ui.auth.signup.SignUpfragment">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/bobo_logo"
-            app:layout_constraintBottom_toBottomOf="@+id/materialButton"
+            app:layout_constraintBottom_toBottomOf="@+id/backbutton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/materialButton" />
+            app:layout_constraintTop_toTopOf="@+id/backbutton" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton"
+            android:id="@+id/backbutton"
             style="@style/Widget.Material3.Button.IconButton.Outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="11dp"
             android:text="Back"
+            app:rippleColor="@color/white"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"

@@ -6,7 +6,7 @@
     android:background="@drawable/spbackground"
     android:backgroundTint="#EDEBEB"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.SplashFragment">
+    tools:context=".ui.splash.SplashFragment">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/courierlottie"
