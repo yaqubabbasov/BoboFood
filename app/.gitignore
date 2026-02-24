@@ -1,1 +1,9 @@
 /build
+# Gradle
+.gradle/
+**/build/
+local.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
