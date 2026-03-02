@@ -11,7 +11,7 @@ class ProductRepository(var pds: ProductDataSource,
                         var roomdao: LocalDataSource
 ) {
     suspend fun registerauth(email:String,password: String): Result<String> =pds.registerauth(email,password)
-     fun getcurrentuser():Result<String> =pds.getCurrentUser()
+    fun getcurrentuser():Result<String> =pds.getCurrentUser()
     suspend fun productdown():List<Yemekler>{
         return pds.productdown()
 
@@ -39,6 +39,7 @@ class ProductRepository(var pds: ProductDataSource,
         val id = yemekId.toIntOrNull() ?: return null
         return roomdao.getFeatureById(id)?.features
     }
+
 
 
 

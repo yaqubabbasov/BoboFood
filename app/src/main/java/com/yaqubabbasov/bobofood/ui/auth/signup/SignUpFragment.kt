@@ -36,8 +36,6 @@ class SignUpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-
-
     }
     private fun setupObserve(){
         viewmodel.currentuser.observe(viewLifecycleOwner){result->

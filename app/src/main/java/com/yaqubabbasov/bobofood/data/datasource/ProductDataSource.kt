@@ -30,23 +30,23 @@ class ProductDataSource(val pdao: ProductDao) {
         }
 
     }
-suspend fun productdown():List<Yemekler> =
+    suspend fun productdown():List<Yemekler> =
         withContext(Dispatchers.IO) {
             return@withContext pdao.productdown().yemekler
 
         }
     suspend fun addtocart(food_name:String,
-                  food_image_name:String,
-                  food_price: Int,
-                  food_order_quantity:Int,
-                  username: String) =
+                          food_image_name:String,
+                          food_price: Int,
+                          food_order_quantity:Int,
+                          username: String) =
         withContext(Dispatchers.IO){
             pdao.addtocart(food_name,food_image_name,food_price,food_order_quantity,username)
             Log.e("control","$food_name,$food_image_name,$food_price,$food_order_quantity,$username")
 
 
-    }
-  suspend fun getcartdown(username:String):List<Basket_List> =
+        }
+    suspend fun getcartdown(username:String):List<Basket_List> =
         withContext(Dispatchers.IO) {
             val cart= pdao.getcartdown(username).sepet_yemekler
             return@withContext mergeCart(cart)
@@ -76,6 +76,7 @@ suspend fun productdown():List<Yemekler> =
         }
 
     }
+
 
 
 

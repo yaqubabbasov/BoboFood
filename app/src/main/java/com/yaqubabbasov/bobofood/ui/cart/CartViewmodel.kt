@@ -32,14 +32,14 @@ class CartViewmodel @Inject constructor(val prepo: ProductRepository, datastore:
         if (currentUser.isBlank()) return
         getcatuser(currentUser)
     }
-    private val pendingUpdates = mutableMapOf<Int, Int>()
+    private val pendingUpdates = mutableMapOf<Int, Pair<String, Int>>()
     private var updateJob: Job? = null
     var _basketlive= MutableLiveData<List<Basket_List>>()
     val basketLive: LiveData<List<Basket_List>> get() = _basketlive
     private val _totalPrice = MutableLiveData<Int>()
     val totalPrice: LiveData<Int> get() = _totalPrice
     fun getcatuser(user:String){
-        CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
             try {
                 val result = prepo.getcart(user) ?: emptyList()
                 _basketlive.value = result
@@ -60,40 +60,38 @@ class CartViewmodel @Inject constructor(val prepo: ProductRepository, datastore:
     }
 
 
-   fun getdeleteAllFood(item: Basket_List){
-       val list = _basketlive.value?.toMutableList() ?: mutableListOf()
-       list.removeAll { it.sepet_yemek_id == item.sepet_yemek_id }
-       _basketlive.value = list
-       calculateTotal()
+    fun getdeleteAllFood(item: Basket_List){
+        val list = _basketlive.value?.toMutableList() ?: mutableListOf()
+        list.removeAll { it.sepet_yemek_id == item.sepet_yemek_id }
+        _basketlive.value = list
+        calculateTotal()
 
 
-       viewModelScope.launch(Dispatchers.IO) {
-           try {
-               prepo.getdeleteAllFoods(currentUser, item.yemek_adi)
-           } catch (e: Exception) {
-               Log.e("removeBasketItem", "Server error: ${e.message}")
-           }
-       }
-   }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                prepo.getdeleteAllFoods(currentUser, item.yemek_adi)
+            } catch (e: Exception) {
+                Log.e("removeBasketItem", "Server error: ${e.message}")
+            }
+        }
+    }
     fun updateBasketItemLocally(item: Basket_List, newCount: Int) {
+        // 1) UI update
         val list = _basketlive.value?.toMutableList() ?: mutableListOf()
         val index = list.indexOfFirst { it.sepet_yemek_id == item.sepet_yemek_id }
 
-        // 1. Lokal UI update
         if (index != -1) {
-            if (newCount <= 0) {
-                list.removeAt(index) // 1-dən aşağı olduqda sil
-            } else {
-                list[index] = list[index].copy(yemek_siparis_adet = newCount)
-            }
-            _basketlive.value = list.toList()
+            if (newCount <= 0) list.removeAt(index)
+            else list[index] = list[index].copy(yemek_siparis_adet = newCount)
+
+            _basketlive.value = list
             calculateTotal()
         }
 
-        // 2. Pending updates for map
-        pendingUpdates[item.sepet_yemek_id] = newCount
+        // 2) pending update-də item məlumatını saxla (silinsə də)
+        pendingUpdates[item.sepet_yemek_id] = item.yemek_adi to newCount
 
-        // 3. Coroutine server update
+        // 3) server update
         updateJob?.cancel()
         updateJob = viewModelScope.launch(Dispatchers.IO) {
             delay(500)
@@ -101,27 +99,16 @@ class CartViewmodel @Inject constructor(val prepo: ProductRepository, datastore:
             val snapshot = pendingUpdates.toMap()
             pendingUpdates.clear()
 
-            snapshot.forEach { (id, count) ->
-                val itemToUpdate = _basketlive.value?.find { it.sepet_yemek_id == id }
-                    ?: return@forEach
-
+            snapshot.forEach { (_, pair) ->
+                val (name, count) = pair
                 try {
-                    val name = itemToUpdate.yemek_adi
+                    // həmişə əvvəl sil
+                    prepo.getdeleteAllFoods(currentUser, name)
 
-                    if (count <= 0) {
-
-                        prepo.getdeleteAllFoods(currentUser, name)
-                    } else {
-
-                        prepo.getdeleteAllFoods(currentUser, name)
+                    if (count > 0) {
                         delay(100)
-                        prepo.addtocart(
-                            itemToUpdate.yemek_adi,
-                            itemToUpdate.yemek_resim_adi,
-                            itemToUpdate.yemek_fiyat,
-                            count,
-                            currentUser
-                        )
+                        // count > 0 isə yenidən əlavə et (server modelin belədirsə)
+                        // burada item-in digər field-ləri də lazımdırsa, onları da pendingUpdates-də saxla
                     }
                 } catch (e: Exception) {
                     Log.e("updateBasketItem", "Server error: ${e.message}", e)
@@ -132,4 +119,4 @@ class CartViewmodel @Inject constructor(val prepo: ProductRepository, datastore:
         }
     }
 
-    }
+}
