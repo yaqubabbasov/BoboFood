@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.yaqubabbasov.bobofood.ui.auth.login.Loginfragment"
+        android:name="com.yaqubabbasov.bobofood.ui.auth.login.LoginFragment"
         android:label="fragment_loginfragment"
         tools:layout="@layout/fragment_loginfragment" >
         <action
@@ -21,6 +21,9 @@
             app:launchSingleTop="false"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_onBoarding4"
+            app:destination="@id/onBoarding4" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -29,7 +32,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/homdetbridge"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/homeprfbridge"
             app:destination="@id/profilFragment" />
@@ -44,7 +51,11 @@
             app:argType="com.yaqubabbasov.bobofood.data.entity.Yemekler" />
         <action
             android:id="@+id/dtlcart"
-            app:destination="@id/cartFragment" />
+            app:destination="@id/cartFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -76,7 +87,7 @@
         tools:layout="@layout/fragment_view_pager" />
     <fragment
         android:id="@+id/signUpfragment"
-        android:name="com.yaqubabbasov.bobofood.ui.auth.signup.SignUpfragment"
+        android:name="com.yaqubabbasov.bobofood.ui.auth.signup.SignUpFragment"
         android:label="SignUpfragment"
         tools:layout="@layout/fragment_sign_upfragment"
         >
@@ -103,7 +114,11 @@
             app:destination="@id/homeFragment" />
         <action
             android:id="@+id/onborading4bridgelogin"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/profilFragment"

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.yaqubabbasov.bobofood.data.entity.Yemekler
+import com.yaqubabbasov.bobofood.data.model.PrFeaturesRoom
 import com.yaqubabbasov.bobofood.data.model.RoomFood
 
 @Dao
@@ -18,4 +19,5 @@ interface ProductRoomDao {
     suspend fun isFavourite(id: Int): Boolean
     @Delete
     suspend fun removeFavourite(product: RoomFood)
+
 }

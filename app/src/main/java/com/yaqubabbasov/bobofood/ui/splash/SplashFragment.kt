@@ -19,17 +19,13 @@ import kotlinx.coroutines.launch
 class SplashFragment : Fragment() {
     private  var _binding: FragmentSplashBinding?=null
     private val binding get() = _binding!!
-    private lateinit var auth: FirebaseAuth
     private lateinit var prefs: PrefsManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
-        /* lifecycleScope.launch {
-             delay(4000)
-             findNavController().navigate(R.id.splash_viewpagerbridge)
-         }*/
+
 
         return binding.root
 

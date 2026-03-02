@@ -11,8 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.yaqubabbasov.bobofood.R
 import com.yaqubabbasov.bobofood.data.datasource.PrefsManager
 import com.yaqubabbasov.bobofood.databinding.FragmentOnBoarding3Binding
-import com.yaqubabbasov.bobofood.ui.viewpager.ViewPagerFragment
-import com.yaqubabbasov.bobofood.ui.auth.login.Loginfragment
 import kotlinx.coroutines.launch
 
 class OnBoarding3 : Fragment() {
@@ -43,12 +41,7 @@ class OnBoarding3 : Fragment() {
             findNavController().navigate(R.id.onBoarding4)
         }
     }
-    private fun onboardscreen(){
-        val sharedpref=requireActivity().getSharedPreferences("onboarding", Context.MODE_PRIVATE)
-        val editor= sharedpref.edit()
-        editor.putBoolean("finished",true)
-        editor.apply()
-    }
+
 
 
 }

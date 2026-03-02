@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.yaqubabbasov.bobofood.data.datasource.PrefsManager
 import com.yaqubabbasov.bobofood.data.model.RoomFood
 import com.yaqubabbasov.bobofood.data.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(val prepo: ProductRepository): ViewModel() {
+class DetailViewModel @Inject constructor(val prepo: ProductRepository, val datastoremanager: PrefsManager): ViewModel() {
     val count= MutableLiveData("1")
     val username= MutableLiveData<String>()
     private val _isFavourite = MutableLiveData<Boolean>()
@@ -35,9 +37,14 @@ class DetailViewModel @Inject constructor(val prepo: ProductRepository): ViewMod
     fun addtocart(food_name:String,
                   food_image_name:String,
                   food_price: Int,
-                  food_order_quantity:Int,
-                  username: String){
-        CoroutineScope(Dispatchers.Main).launch {
+                  food_order_quantity:Int
+                 )= viewModelScope.launch {
+            val username = datastoremanager.getUsername()
+            if (username.isBlank()) {
+                Log.e("addtocart", "Username boşdur — register zamanı setUsername çağırılmayıb")
+                return@launch
+            }
+
             prepo.addtocart(food_name,
                 food_image_name,
                 food_price,
@@ -46,25 +53,16 @@ class DetailViewModel @Inject constructor(val prepo: ProductRepository): ViewMod
             Log.e("control","$food_name,$food_image_name,$food_price,$food_order_quantity,$username")
 
         }
-    }
 
-    fun addfavourites(list: RoomFood){
-        CoroutineScope(Dispatchers.Main).launch {
-            prepo.addfavouritess(list)
-            Log.e("check","List yoxlanldı:$list")
-        }
-    }
+
+
     fun checkFavourite(yemekId: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             _isFavourite.value = prepo.isFavourite(yemekId)
         }
     }
-    fun removeFavourite(product: RoomFood){
-        CoroutineScope(Dispatchers.Main).launch {
-            prepo.removeFavourite(product)
-        }
-    }
-    // burda yarımçıq qalmısan gəlib davam edərsən
+
+
     fun toggleFavourite(product: RoomFood) {
       CoroutineScope(Dispatchers.Main).launch {
             if (prepo.isFavourite(product.yemek_id)) {
@@ -79,6 +77,13 @@ class DetailViewModel @Inject constructor(val prepo: ProductRepository): ViewMod
 
         }
     }
+    private val _featureText = MutableLiveData<String>()
+    val featureText: LiveData<String> = _featureText
+
+    fun loadFeature(yemekId: String) = viewModelScope.launch {
+        _featureText.value = prepo.getFeatureTextForProduct(yemekId) ?: "Xüsusiyyət yoxdur"
+    }
+
 
 
 

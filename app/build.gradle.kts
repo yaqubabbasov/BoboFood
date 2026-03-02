@@ -114,6 +114,11 @@ dependencies {
     //DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    //Toast
+    implementation("com.github.Spikeysanju:MotionToast:1.4") {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-android-extensions-runtime")
+    }
+
 
 
 

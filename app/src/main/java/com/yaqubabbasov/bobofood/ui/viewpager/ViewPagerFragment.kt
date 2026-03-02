@@ -26,7 +26,7 @@ class ViewPagerFragment : Fragment(), OnboardingPageChanger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = ViewPagerAdapter(this)   // 🔥 BURASI ÇOX VACİB
+        adapter = ViewPagerAdapter(this)
         binding.viewpager.adapter = adapter
     }
 

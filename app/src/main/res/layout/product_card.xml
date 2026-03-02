@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/softgray"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -75,6 +76,7 @@
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/iconbackgr"
                 app:icon="@drawable/add_icon"
+                app:rippleColor="@color/softgray"
                 app:iconTint="@color/selectbutton"
                 app:layout_constraintBottom_toBottomOf="@+id/cardprice"
                 app:layout_constraintEnd_toEndOf="parent"

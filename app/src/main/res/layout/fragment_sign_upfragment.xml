@@ -9,7 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.auth.signup.SignUpfragment">
+        android:background="@color/softgray"
+        tools:context=".ui.auth.signup.SignUpFragment">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
@@ -54,27 +55,54 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emaillayout"
+            android:id="@+id/usernamelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            android:hint="email address"
+            android:hint="username"
             app:errorEnabled="true"
-            app:boxBackgroundMode="outline"
-            app:hintTextColor="@color/textinput_stroke_color"
-            app:boxStrokeColor="@color/textinput_stroke_color"
-            app:errorTextColor="@color/red"
-            app:boxStrokeWidth="1dp"
             android:textColorHint="@color/hintcolor"
+            app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
-
             app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/textinput_stroke_color"
+            app:boxStrokeWidth="1dp"
+            app:errorTextColor="@color/red"
+            app:hintTextColor="@color/textinput_stroke_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/usernametext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emaillayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:hint="email address"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/hintcolor"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/textinput_stroke_color"
+            app:boxStrokeWidth="1dp"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:hintTextColor="@color/textinput_stroke_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/usernamelayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailtext"

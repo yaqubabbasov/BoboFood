@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:fitsSystemWindows="true"
+
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.auth.login.Loginfragment">
+        android:background="@color/softgray"
+        tools:context=".ui.auth.login.LoginFragment">
 
         <ImageView
             android:id="@+id/imageView"
@@ -31,6 +32,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="11dp"
             android:text="Back"
+            app:strokeWidth="0dp"
+            app:rippleColor="@color/white"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -38,7 +41,7 @@
             app:iconTint="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/white" />
+            app:strokeColor="@color/softgray" />
 
         <TextView
             android:id="@+id/textView"

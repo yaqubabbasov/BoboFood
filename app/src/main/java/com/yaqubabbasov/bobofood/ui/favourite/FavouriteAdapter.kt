@@ -9,7 +9,7 @@ import com.yaqubabbasov.bobofood.data.model.RoomFood
 import com.yaqubabbasov.bobofood.databinding.FavouriteCardBinding
 
 class FavouriteAdapter(var context: Context, var favourtielist: List<RoomFood>, var viewmodel: FavouriteViewModel): RecyclerView.Adapter<FavouriteAdapter.FavourtieViewHolder>() {
-    inner class FavourtieViewHolder(val binding: FavouriteCardBinding): RecyclerView.ViewHolder(binding.root)
+     class FavourtieViewHolder(val binding: FavouriteCardBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

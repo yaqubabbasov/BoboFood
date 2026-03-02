@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.yaqubabbasov.bobofood.R
 import com.yaqubabbasov.bobofood.databinding.FragmentCartBinding
-import com.yaqubabbasov.bobofood.ui.adapter.BasketAdapter
+import com.yaqubabbasov.bobofood.ui.cart.BasketAdapter
 import com.yaqubabbasov.bobofood.ui.cart.CartViewmodel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,7 +57,7 @@ class CartFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewmodel.getcatuser("jacob")
+        viewmodel.refreshCart()
     }
 
 

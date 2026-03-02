@@ -15,9 +15,10 @@
     <color name="orange">#FFA500</color>
     <color name="darkgreen">#6F9574</color>
     <color name="gray">#ADACAC</color>
+    <color name="light_gray">#C8C6C6</color>
     <color name="ngray">#595959</color>
     <color name="backsoftgreen">#ECFFEF</color>
-    <color name="softgray">#E4E0E0</color>
+    <color name="softgray">#F8F4F4</color>
 
     <!-- Material3 Light Colors -->
     <color name="colorPrimary">#6200EE</color>

@@ -1,13 +1,17 @@
 package com.yaqubabbasov.bobofood.data.datasource
 
 import com.yaqubabbasov.bobofood.data.entity.Yemekler
+import com.yaqubabbasov.bobofood.data.model.PrFeaturesRoom
 import com.yaqubabbasov.bobofood.data.model.RoomFood
+import com.yaqubabbasov.bobofood.retrofit.ProductDao
+import com.yaqubabbasov.bobofood.room.FeatureDao
 import com.yaqubabbasov.bobofood.room.ProductRoomDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class LocalDataSource (val roomdao: ProductRoomDao){
-
+class LocalDataSource (val roomdao: ProductRoomDao,
+                       val featureDao: FeatureDao
+){
     suspend fun addfavouritess(list: RoomFood){
         withContext(Dispatchers.IO){
             roomdao.addfavourite(list)
@@ -27,9 +31,5 @@ class LocalDataSource (val roomdao: ProductRoomDao){
         }
     }
 
-
-
-
-
-
+    suspend fun getFeatureById(id: Int): PrFeaturesRoom? = featureDao.getById(id)
 }

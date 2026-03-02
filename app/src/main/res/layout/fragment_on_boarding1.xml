@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:backgroundTint="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/softgray"
     tools:context=".ui.onboarding.OnBoarding1">
 
     <ImageView

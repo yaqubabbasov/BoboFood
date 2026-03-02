@@ -23,6 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/softgray"
         tools:context=".ui.detail.DetailFragment">
 
         <androidx.cardview.widget.CardView
@@ -62,6 +63,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:text="Back"
+            app:strokeWidth="0dp"
+            app:rippleColor="@android:color/transparent"
+            android:textColor="@color/black"
             app:icon="@drawable/back_icon"
             app:iconTint="@color/black"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,13 +78,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/heart_icon"
-            app:iconTint="@color/softgray"
-            app:backgroundTint="@android:color/transparent"
+            app:iconTint="@color/gray"
+            app:strokeWidth="0dp"
+            app:rippleColor="@android:color/transparent"
             android:layout_marginEnd="22dp"
             app:layout_constraintBottom_toBottomOf="@+id/backmaterial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/backmaterial"
-            app:strokeColor="@color/white" />
+          />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -106,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            app:rippleColor="@color/softgray"
             android:backgroundTint="@color/iconbackgr"
             app:icon="@drawable/add_icon"
             app:iconSize="20dp"
@@ -122,6 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
+            app:rippleColor="@color/softgray"
             android:backgroundTint="@color/iconbackgr"
             app:icon="@drawable/minus_icon"
             app:iconSize="20dp"
@@ -168,6 +175,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/addtocartbutton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/addtocartbutton" />
+
+        <TextView
+            android:id="@+id/featuretext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"
+
+            android:textAlignment="textStart"
+            android:textSize="18sp"
+
+            app:layout_constraintBottom_toTopOf="@+id/addtocartbutton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/minusbutton" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

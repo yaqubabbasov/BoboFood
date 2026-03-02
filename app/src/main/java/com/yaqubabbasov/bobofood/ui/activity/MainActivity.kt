@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomnavigation.setOnItemSelectedListener { item ->
             when(item.itemId){
                 R.id.homeFragment -> {
-                    // Hər zaman HomeFragment-ə keçid
+
                     nav.navigate(R.id.homeFragment)
                     true
                 }

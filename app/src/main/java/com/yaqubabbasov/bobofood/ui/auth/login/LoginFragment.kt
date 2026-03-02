@@ -1,6 +1,5 @@
 package com.yaqubabbasov.bobofood.ui.auth.login
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class Loginfragment : Fragment() {
+class LoginFragment : Fragment() {
     private  var _binding: FragmentLoginfragmentBinding? =null
     private val  binding get() = _binding!!
     private lateinit var prefs: PrefsManager
@@ -55,28 +54,21 @@ class Loginfragment : Fragment() {
 
     }
     private fun setupObserve(){
-        viewmodel.currentuser.observe(viewLifecycleOwner){result->
-            result.onSuccess {email->
-                if (email!=null){
-                    Toast.makeText(requireContext(),"Oturum açık:$email", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(requireContext(),"Oturum kapalı!!", Toast.LENGTH_SHORT).show()
+
+        viewmodel.authstate.observe(viewLifecycleOwner) { result ->
+            result.onSuccess { email ->
+                Toast.makeText(requireContext(), "Welcome: $email", Toast.LENGTH_SHORT).show()
+
+                lifecycleScope.launch {
+                    prefs.setLoggedIn(true)
+                    prefs.setOnboardingStep(4)
                 }
 
-            }.onFailure{
-                Toast.makeText(requireContext(),it.message, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.homeFragment) // ya action id
+
+            }.onFailure { e ->
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
             }
-
-        }
-        viewmodel.authstate.observe(viewLifecycleOwner){result ->
-            result.onSuccess {
-                Toast.makeText(requireContext(),"Welcome:$it", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.loghomebridge)
-            }.onFailure {exception ->
-                Toast.makeText(requireContext(),exception.message, Toast.LENGTH_SHORT).show()
-            }
-
-
         }
         viewmodel.emailError.observe(viewLifecycleOwner){error->
             binding.emaillayout.error=error
@@ -104,15 +96,14 @@ class Loginfragment : Fragment() {
              val email=binding.emailtext.text.toString()
              val password=binding.passwordtext.text.toString()
              if (binding.loginbutton.isEnabled){
-                 viewmodel.login(email,password)
-                 lifecycleScope.launch {
-                     prefs.setLoggedIn(true)       // login oldu
-                     prefs.setOnboardingStep(4)    // OnBoarding4 artıq tamamlandı
-                     findNavController().navigate(R.id.homeFragment)
+                 if (binding.loginbutton.isEnabled) {
+                     viewmodel.login(email, password)
+                 } else {
+                     Toast.makeText(requireContext(),"Please check the information.", Toast.LENGTH_SHORT).show()
                  }
 
              }else{
-                 Toast.makeText(requireContext(),"Lütfen bilgileri kontrol edin", Toast.LENGTH_SHORT).show()
+                 Toast.makeText(requireContext(),"Please check the information.", Toast.LENGTH_SHORT).show()
              }
          }
     }

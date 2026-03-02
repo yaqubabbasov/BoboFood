@@ -38,13 +38,21 @@ class OnBoarding4 : Fragment() {
         binding= FragmentOnBoarding4Binding.inflate(inflater, container, false)
         return binding.root
     }
-
-    fun onboardseen(){
-        val sharedpref=requireActivity().getSharedPreferences("onboarding", Context.MODE_PRIVATE)
-        val editor= sharedpref.edit()
-        editor.putBoolean("finished",true)
-        editor.apply()
+    val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            if (account != null) {
+                viewmodel.firebaseAuthwithGoogle(account)
+            }
+        } catch (e: ApiException) {
+            Toast.makeText(requireContext(), "Google sign-in failed: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,68 +67,25 @@ class OnBoarding4 : Fragment() {
             hamburgerlottie.repeatMode= LottieDrawable.RESTART
             hamburgerlottie.playAnimation()
         }
-
-
-
-
-
-       val googleSignInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                account?.let {result->
-                    viewmodel.firebaseAuthwithGoogle(result)
-                    lifecycleScope.launch {
-                        prefs.setLoggedIn(true)     // Google login oldu
-                        prefs.setOnboardingStep(4)  // OnBoarding4 tamamlandı
-                        findNavController().navigate(R.id.homeFragment)
-                    }
-                }
-            } catch (e: ApiException) {
-                Toast.makeText(requireContext(), "Google sign-in failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-
-
-
-
-
-
-
         binding.googlebutton.setOnClickListener {
-             val signinclient=viewmodel.getGoogleSignİnclient(requireContext())
-
-            signinclient.signOut().addOnCompleteListener {
-                googleSignInLauncher.launch(signinclient.signInIntent)
-            }
-
-
+            val client = viewmodel.getGoogleSignInClient(requireContext())
+            googleSignInLauncher.launch(client.signInIntent)
         }
 
-        viewmodel.authstate.observe(viewLifecycleOwner){ result: Result<String?> ->
+        viewmodel.authstate.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-
                 lifecycleScope.launch {
-                    prefs.setLoggedIn(true)
+                    prefs.setOnboardingStep(4)
                 }
-
                 findNavController().navigate(R.id.homeFragment)
-            }
-
-            result.onFailure { exception ->
+            }.onFailure { exception ->
                 Toast.makeText(requireContext(), exception.message, Toast.LENGTH_SHORT).show()
             }
         }
 
-
         binding.logbutton.setOnClickListener {
             findNavController().navigate(R.id.onborading4bridgelogin)
         }
-
-
 
 
 

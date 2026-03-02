@@ -8,7 +8,8 @@ import com.yaqubabbasov.bobofood.data.model.RoomFood
 import com.yaqubabbasov.bobofood.room.ProductRoomDao
 
 class ProductRepository(var pds: ProductDataSource,
-                        var roomdao: LocalDataSource) {
+                        var roomdao: LocalDataSource
+) {
     suspend fun registerauth(email:String,password: String): Result<String> =pds.registerauth(email,password)
      fun getcurrentuser():Result<String> =pds.getCurrentUser()
     suspend fun productdown():List<Yemekler>{
@@ -24,7 +25,6 @@ class ProductRepository(var pds: ProductDataSource,
         food_price,
         food_order_quantity,
         username)
-  //suspend fun getcartdown(username:String):List<Basket_List> =pds.getcartdown(username)
     suspend fun getcart(username: String): List<Basket_List> = pds.getcartdown(username)
 
     suspend fun getdeleteAllFoods( username: String,foodname: String,)=pds.deleteAllFoods(username,foodname)
@@ -34,6 +34,12 @@ class ProductRepository(var pds: ProductDataSource,
         return roomdao.isFavourite(id)
     }
     suspend fun removeFavourite(product: RoomFood)=roomdao.removeFavourite(product)
+
+    suspend fun getFeatureTextForProduct(yemekId: String): String? {
+        val id = yemekId.toIntOrNull() ?: return null
+        return roomdao.getFeatureById(id)?.features
+    }
+
 
 
 

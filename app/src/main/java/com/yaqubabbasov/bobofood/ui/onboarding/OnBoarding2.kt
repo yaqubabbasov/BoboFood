@@ -46,12 +46,7 @@ class OnBoarding2 : Fragment() {
         }
 
     }
-    private fun onboardscreen(){
-        val sharedpref=requireActivity().getSharedPreferences("onboarding", Context.MODE_PRIVATE)
-        val editor= sharedpref.edit()
-        editor.putBoolean("finished",true)
-        editor.apply()
-    }
+
 
 
 }

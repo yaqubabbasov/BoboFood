@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yaqubabbasov.bobofood.R
-import com.yaqubabbasov.bobofood.data.entity.getPasswordStrength
+import com.yaqubabbasov.bobofood.util.getPasswordStrength
 import com.yaqubabbasov.bobofood.databinding.FragmentSignUpfragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpfragment : Fragment() {
+class SignUpFragment : Fragment() {
  private var _binding: FragmentSignUpfragmentBinding?=null
     private val binding get() = _binding!!
  private val viewmodel: SignUpViewModel by viewModels()
@@ -43,9 +43,9 @@ class SignUpfragment : Fragment() {
         viewmodel.currentuser.observe(viewLifecycleOwner){result->
             result.onSuccess {email->
                 if (email!=null){
-                    Toast.makeText(requireContext(),"Oturum açık:$email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),"Signed in: $email", Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(requireContext(),"Oturum kapalı!!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),"Signed out!!", Toast.LENGTH_SHORT).show()
                 }
 
             }.onFailure{
@@ -55,12 +55,16 @@ class SignUpfragment : Fragment() {
         }
         viewmodel.authstate.observe(viewLifecycleOwner){result ->
             result.onSuccess {
+                findNavController().navigate(R.id.signloginbridge)
                 Toast.makeText(requireContext(),it, Toast.LENGTH_SHORT).show()
             }.onFailure {exception ->
                 Toast.makeText(requireContext(),exception.message, Toast.LENGTH_SHORT).show()
             }
 
 
+        }
+        viewmodel.usernameError.observe(viewLifecycleOwner) { error ->
+            binding.usernamelayout.error = error
         }
        viewmodel.emailError.observe(viewLifecycleOwner){error->
            binding.emaillayout.error=error
@@ -74,6 +78,10 @@ class SignUpfragment : Fragment() {
 
     }
     private fun setupListener(){
+        binding.usernametext.addTextChangedListener {
+            viewmodel.validateUsername(it.toString())
+            checkFields()
+        }
 
         binding.emailtext.addTextChangedListener {
             val email= it.toString()
@@ -86,43 +94,41 @@ class SignUpfragment : Fragment() {
         binding.passwordtext.addTextChangedListener {
             viewmodel.validatePassword(it.toString())
             checkFields() }
-        binding.signcheckbox.setOnCheckedChangeListener { _,_,->
+        binding.signcheckbox.setOnCheckedChangeListener { _,_->
             checkFields()}
 
         binding.loginbutton.setOnClickListener {
             val email=binding.emailtext.text.toString()
             val password=binding.passwordtext.text.toString()
+            val username= binding.usernametext.text.toString().trim()
+            if (username.isEmpty()) {
+                Toast.makeText(requireContext(), "Please enter a username.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val checkbox= binding.signcheckbox.isChecked
             if (!checkbox) {
-                Toast.makeText(requireContext(), "Qaydaları qəbul etməlisiniz", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "You must accept the terms and conditions.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener   // stop here, don't navigate
             }
-            val isvalid= viewmodel.validateAll(email,password)
+            val isvalid= viewmodel.validateAll(email,password,username)
             if (isvalid){
-                viewmodel.registerauth(email,password)
+                viewmodel.registerauth(email,password, username)
             }else{
-                Toast.makeText(requireContext(),"Lütfen bilgileri kontrol edin", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),"Please check the information.", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
     fun passwordstrength(){
         binding.passwordtext.addTextChangedListener { editable ->
             val password = editable.toString()
             if (password.isEmpty()) {
-                //binding.passwordlayout.error = null
                 binding.passwordStrengthBar.progress = 0
                 binding.passwordStrengthBar.progressTintList =
                     ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.unselectbutton))
                 binding.passwordStrengthLabel.text = ""
                 return@addTextChangedListener}
-            /*else if (password.length < 8){
-                binding.passwordlayout.error = "Şifrə ən azı 8 simvol olmalıdır"
 
-            }else if (!password.any { it.isUpperCase() }) {
-                binding.passwordlayout.error = "Şifrədə ən az bir böyük hərf olmalıdır"
-            } else {
-                binding.passwordlayout.error = null
-            }*/
 
             val strength = getPasswordStrength(password)
 
@@ -135,11 +141,12 @@ class SignUpfragment : Fragment() {
         }
     }
     fun checkFields() {
+        val username = binding.usernametext.text.toString().trim()
         val email = binding.emailtext.text.toString()
         val password = binding.passwordtext.text.toString()
         val ischecked= binding.signcheckbox.isChecked
 
-        val isValid = email.isNotEmpty() && password.isNotEmpty() && ischecked
+        val isValid = username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && ischecked
 
         val backgroundcolor= ContextCompat.getColor(requireContext(),if(isValid) R.color.selectbutton  else R.color.unselectbutton)
         val textcolor= ContextCompat.getColor(requireContext(),if(isValid) R.color.white else R.color.buttontextcolor)

@@ -26,8 +26,9 @@ class ProductDataSource(val pdao: ProductDao) {
         return if (email != null) {
             Result.success(email)
         } else {
-            Result.success("No Email")
+            Result.failure(Exception("No user logged in"))
         }
+
     }
 suspend fun productdown():List<Yemekler> =
         withContext(Dispatchers.IO) {
@@ -67,7 +68,10 @@ suspend fun productdown():List<Yemekler> =
                 samefoods.forEach{item->
                     pdao.getdelete(item.sepet_yemek_id,username)
                 }
-            }catch (e: Exception){}
+            }catch (e: Exception){
+                Log.e("delete",e.message.toString())
+
+            }
 
         }
 

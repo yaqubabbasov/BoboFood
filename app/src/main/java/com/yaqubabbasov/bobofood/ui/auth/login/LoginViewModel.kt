@@ -17,19 +17,14 @@ import javax.inject.Inject
 class LoginViewModel@Inject constructor(val prepo: ProductRepository): ViewModel() {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val _currentuser = MutableLiveData<Result<String?>>()
-    val currentuser: LiveData<Result<String?>> get() = _currentuser
     val authstate: LiveData<Result<String?>> get() = _authstate
     private val _authstate = MutableLiveData<Result<String?>>()
-    private val _validationState = MutableLiveData<String?>()
-    val validationState: LiveData<String?> get() = _validationState
     private val _emailError = MutableLiveData<String?>()
     val emailError: LiveData<String?> get() = _emailError
     private val _passwordError = MutableLiveData<String?>()
     val passwordError: LiveData<String?> get() = _passwordError
 
-    init {
-        checkuserstatus()
-    }
+
 
     fun login(email: String, password: String) = viewModelScope.launch(Dispatchers.IO) {
         try {
@@ -49,22 +44,13 @@ class LoginViewModel@Inject constructor(val prepo: ProductRepository): ViewModel
         } ?: _currentuser.postValue(Result.success(null))
     }
 
-    private fun signout() {
-        try {
-            auth.signOut()
-            _authstate.postValue(Result.success("Success"))
-            checkuserstatus()
-        } catch (e: Exception) {
-            _authstate.postValue(Result.failure(e))
-        }
 
-    }
 
     fun validateEmail(email: String) {
         _emailError.value = when {
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
-                "Düzgün email daxil edin"
-            email.isEmpty()->"Düzgün email daxil edin"
+                "Please enter a valid email address."
+            email.isEmpty()->"Please enter a valid email address."
 
             else -> null
 
@@ -75,8 +61,8 @@ class LoginViewModel@Inject constructor(val prepo: ProductRepository): ViewModel
     fun validatePassword(password: String) {
         _passwordError.value = when {
             password.isEmpty() -> null
-            password.length < 8 -> "Şifrə ən azı 8 simvol olmalıdır"
-            password.contains(" ") -> "Şifrədə boşluq ola bilməz"
+            password.length < 8 -> "The password must be at least 8 characters long."
+            password.contains(" ") -> "The password cannot contain spaces."
             else -> null
         }
     }

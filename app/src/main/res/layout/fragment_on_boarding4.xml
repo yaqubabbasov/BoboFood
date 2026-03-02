@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/softgray"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.onboarding.OnBoarding4">
     <ImageView
@@ -61,6 +62,7 @@
         android:layout_marginTop="10dp"
         app:icon="@drawable/google_icon"
         app:iconTint="@null"
+        app:rippleColor="@color/softgray"
         app:iconSize="25dp"
         android:text="Sign in with Google"
         android:fontFamily="@font/poppins_bold"

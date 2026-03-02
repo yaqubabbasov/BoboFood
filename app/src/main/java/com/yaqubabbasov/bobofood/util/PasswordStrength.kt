@@ -1,4 +1,4 @@
-package com.yaqubabbasov.bobofood.data.entity
+package com.yaqubabbasov.bobofood.util
 
 import com.yaqubabbasov.bobofood.R
 

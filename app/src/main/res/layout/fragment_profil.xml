@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/softgray"
     tools:context=".ui.profil.ProfilFragment">
 
     <ImageView
@@ -12,31 +13,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:src="@drawable/bobo_logo"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toEndOf="@+id/cancelbutton"
+        app:layout_constraintEnd_toEndOf="@+id/cardprofilimage"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/cancelbutton"
-        style="@style/Widget.Material3.Button.IconButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        app:icon="@drawable/close_icon"
-        app:iconTint="@null"
-
-        app:layout_constraintBottom_toBottomOf="@+id/profilphoto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profilphoto" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardprofilimage"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="24dp"
         app:cardCornerRadius="40dp"
-        app:layout_constraintStart_toStartOf="@+id/cancelbutton"
-        app:layout_constraintTop_toBottomOf="@+id/cancelbutton">
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/profilphoto"
+        app:layout_constraintTop_toBottomOf="@+id/profilphoto">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,13 +36,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@drawable/avatarprofile"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/nametext"
         android:layout_width="0dp"
         android:layout_height="20dp"
 
@@ -63,13 +52,14 @@
         app:layout_constraintTop_toTopOf="@+id/cardprofilimage" />
 
     <TextView
+        android:id="@+id/emailtext"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardprofilimage"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/nametext" />
 
     <TextView
         android:id="@+id/textView11"

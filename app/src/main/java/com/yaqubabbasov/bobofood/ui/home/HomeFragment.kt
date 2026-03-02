@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
         binding.productrv.layoutManager=
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-        val adapter = ProductAdapter(requireContext(), emptyList()) { yemek ->
+        val adapter = ProductAdapter(requireActivity(),requireContext(), emptyList(),viewmodel) { yemek ->
             if (isAdded && viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                 try {
                     val action = HomeFragmentDirections.homdetbridge(yemek)
@@ -50,6 +50,10 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+        viewmodel.username.observe(viewLifecycleOwner) { u ->
+            binding.usertext.text = if (u.isBlank()) "Guest" else "Hi ${u}"
+        }
+        viewmodel.loadUsername()
         binding.productrv.post {
             binding.productrv.adapter = adapter
         }
@@ -68,12 +72,14 @@ class HomeFragment : Fragment() {
             foodlottie.repeatMode= LottieDrawable.RESTART
             foodlottie.playAnimation()
         }
+
+
     }
 
     private fun search() {
         binding.searchview.setupWithSearchBar(binding.searchBar)
 
-        val searchAdapter = ProductAdapter(requireContext(), emptyList()) { yemek ->
+        val searchAdapter = ProductAdapter(requireActivity(),requireContext(), emptyList(), viewmodel) { yemek ->
             if (isAdded && viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                 try {
                     val action = HomeFragmentDirections.homdetbridge(yemek)

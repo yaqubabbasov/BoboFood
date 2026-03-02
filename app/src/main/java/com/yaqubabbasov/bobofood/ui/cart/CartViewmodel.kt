@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.play.integrity.internal.u
+import com.yaqubabbasov.bobofood.data.datasource.PrefsManager
 import com.yaqubabbasov.bobofood.data.entity.Basket_List
 import com.yaqubabbasov.bobofood.data.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,12 +15,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewmodel @Inject constructor(val prepo: ProductRepository): ViewModel() {
+class CartViewmodel @Inject constructor(val prepo: ProductRepository, datastore: PrefsManager): ViewModel() {
+    private var currentUser: String = ""
     init {
-       getcatuser("jacob")
+        viewModelScope.launch(Dispatchers.IO) {
+            currentUser = datastore.getUsername()
+            if (currentUser.isBlank()) return@launch
+            getcatuser(currentUser)
+        }
+    }
+    fun refreshCart() {
+        if (currentUser.isBlank()) return
+        getcatuser(currentUser)
     }
     private val pendingUpdates = mutableMapOf<Int, Int>()
     private var updateJob: Job? = null
@@ -29,48 +41,18 @@ class CartViewmodel @Inject constructor(val prepo: ProductRepository): ViewModel
     fun getcatuser(user:String){
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val result = prepo.getcart(user) ?: emptyList()  // null safety əlavə olunur
+                val result = prepo.getcart(user) ?: emptyList()
                 _basketlive.value = result
-                    //setbasketitem(result)
             } catch (e: Exception) {
-                Log.e("getcatuser", "Xəta: ${e.message}")
-                _basketlive.value = emptyList()  // problem olsa belə boş list göndər
+                Log.e("getcatuser", "Error: ${e.message}")
+                _basketlive.value = emptyList()
             }
         }
     }
 
-    fun updateBasketItem(item: Basket_List) {
-        CoroutineScope(Dispatchers.Main).launch {
-            val list = _basketlive.value?.toMutableList() ?: mutableListOf()
-            val index = list.indexOfFirst { it.sepet_yemek_id == item.sepet_yemek_id }
-            if (index != -1) {
-                list[index] = item
-                _basketlive.value = list
-                calculateTotal()
-            }
-            try {
-                prepo.getdeleteAllFoods("jacob", item.yemek_adi)
-                prepo.addtocart(
-                    item.yemek_adi,
-                   item.yemek_resim_adi,
-                    item.yemek_fiyat,
-                   item.yemek_siparis_adet,
-                    "jacob",
-                )
 
-                // 3. Local LiveData-ni yenilə
-            } catch (e: Exception) {
-                Log.e("updateBasketItem", "Error: ${e.message}")
-            }
-        }
-    }
 
-    fun removeBasketItem(item: Basket_List) {
-        val list = _basketlive.value?.toMutableList() ?: mutableListOf()
-        list.removeAll { it.sepet_yemek_id == item.sepet_yemek_id }
-        _basketlive.value = list
-        calculateTotal()
-    }
+
     fun calculateTotal() {
         _basketlive.value?.let { list ->
             _totalPrice.value = list.sumOf { it.yemek_fiyat * it.yemek_siparis_adet }
@@ -78,16 +60,16 @@ class CartViewmodel @Inject constructor(val prepo: ProductRepository): ViewModel
     }
 
 
-   fun getdeleteAllFood(item: Basket_List, username: String){
+   fun getdeleteAllFood(item: Basket_List){
        val list = _basketlive.value?.toMutableList() ?: mutableListOf()
        list.removeAll { it.sepet_yemek_id == item.sepet_yemek_id }
        _basketlive.value = list
        calculateTotal()
 
-       // 2. Serverdə sil (fon iş)
+
        viewModelScope.launch(Dispatchers.IO) {
            try {
-               prepo.getdeleteAllFoods(username, item.yemek_adi)
+               prepo.getdeleteAllFoods(currentUser, item.yemek_adi)
            } catch (e: Exception) {
                Log.e("removeBasketItem", "Server error: ${e.message}")
            }
@@ -108,41 +90,45 @@ class CartViewmodel @Inject constructor(val prepo: ProductRepository): ViewModel
             calculateTotal()
         }
 
-        // 2. Pending updates üçün map
+        // 2. Pending updates for map
         pendingUpdates[item.sepet_yemek_id] = newCount
 
         // 3. Coroutine server update
         updateJob?.cancel()
-        updateJob = viewModelScope.launch {
+        updateJob = viewModelScope.launch(Dispatchers.IO) {
             delay(500)
-            val currentUpdates = pendingUpdates.toMap() // snapshot
-            currentUpdates.forEach { (id, count) ->
+
+            val snapshot = pendingUpdates.toMap()
+            pendingUpdates.clear()
+
+            snapshot.forEach { (id, count) ->
                 val itemToUpdate = _basketlive.value?.find { it.sepet_yemek_id == id }
+                    ?: return@forEach
+
                 try {
+                    val name = itemToUpdate.yemek_adi
+
                     if (count <= 0) {
-                        prepo.getdeleteAllFoods("jacob", item.sepet_yemek_id.toString())
+
+                        prepo.getdeleteAllFoods(currentUser, name)
                     } else {
-                        prepo.getdeleteAllFoods("jacob", itemToUpdate?.yemek_adi ?: "")
+
+                        prepo.getdeleteAllFoods(currentUser, name)
                         delay(100)
-                        itemToUpdate?.let {
-                            prepo.addtocart(
-                                it.yemek_adi,
-                                it.yemek_resim_adi,
-                                it.yemek_fiyat,
-                                count,
-                                "jacob"
-                            )
-                        }
+                        prepo.addtocart(
+                            itemToUpdate.yemek_adi,
+                            itemToUpdate.yemek_resim_adi,
+                            itemToUpdate.yemek_fiyat,
+                            count,
+                            currentUser
+                        )
                     }
                 } catch (e: Exception) {
-                    Log.e("updateBasketItem", "Server error: ${e.message}")
+                    Log.e("updateBasketItem", "Server error: ${e.message}", e)
                 }
             }
-            pendingUpdates.clear()
-            // 4. Server refreshdən qaç, UI-də local state artıq silinmiş məhsulu saxlayır
-            // calculateTotal() lazım olduqda çağır
-            calculateTotal()
 
+            withContext(Dispatchers.Main) { calculateTotal() }
         }
     }
 

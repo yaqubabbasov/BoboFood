@@ -9,14 +9,16 @@
           type="com.yaqubabbasov.bobofood.ui.cart.CartFragment" />
         <variable
             name="cartadapt"
-            type="com.yaqubabbasov.bobofood.ui.adapter.BasketAdapter" />
+            type="com.yaqubabbasov.bobofood.ui.cart.BasketAdapter" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/softgray"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cartconstraint"
